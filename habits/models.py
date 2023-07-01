@@ -2,10 +2,21 @@ from django.db import models
 from django import forms
 
 
-# Create your models here.
+PERIODICITY_CHOICES = [
+        ('Daily', 'Daily'),
+        ('Weekly', 'Weekly'),
+        ('Monthly', 'Monthly'),
+        ('Yearly', 'Yearly')
+    ]
+
 class Habit(models.Model):
+    
     name = models.CharField(max_length=50)
-    periodicity = models.CharField(max_length=10)
+    periodicity = models.CharField(
+        max_length=10,
+        choices=PERIODICITY_CHOICES,
+        default='Daily',
+        )
     duration = models.CharField(max_length=20)
     streak = models.IntegerField(default=0)
     streak_type = models.CharField(max_length=10, blank = True)
