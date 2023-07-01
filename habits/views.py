@@ -1,15 +1,13 @@
 import datetime
 from time import strptime
 from django.http import HttpResponseRedirect
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.urls import reverse
 from .models import Habit, CompletedHabit, Inactivity
 from .forms import HabitForm
 from django.db import models
-
 from django.contrib import messages
 
-# Create your views here.
 def index(request):
     return render(request, 'habits/index.html', {
         'habits': Habit.objects.all(),
@@ -17,9 +15,11 @@ def index(request):
         'inactivity_dates': Inactivity.objects.all()
     })
 
+
 def view_habit(request, id):
     habit = Habit.objects.get(pk=id)
     return HttpResponseRedirect(reverse('index'))
+
 
 def add(request):
     if request.method == 'POST':
@@ -55,6 +55,7 @@ def add(request):
         'form': HabitForm()
     })
 
+
 def edit(request, id):
     if request.method == 'POST':
         habit = Habit.objects.get(pk=id)
@@ -72,6 +73,7 @@ def edit(request, id):
         'form': form
     })
 
+
 def delete(request, id):
     if request.method == 'POST':
         habit = Habit.objects.get(pk=id)
@@ -79,12 +81,14 @@ def delete(request, id):
         messages.success(request, "Habit deleted successfully!")
     return HttpResponseRedirect(reverse('index'))
 
+
 def complete_habit(habit):
     completed_habit = CompletedHabit(name=habit)
     completed_habit.save()             
     habit.last_completed_date = completed_habit.completed_date
     habit.streak += 1
     habit.save()
+
 
 def reset_streak(habit):
     completed_habit = CompletedHabit(name=habit)
@@ -94,6 +98,7 @@ def reset_streak(habit):
     habit.last_completed_date = completed_habit.completed_date
     habit.streak = 1
     habit.save()
+
 
 def check_off(request, id):
     if request.method == 'POST':
@@ -184,9 +189,11 @@ def check_off(request, id):
                 
     return HttpResponseRedirect(reverse('index'))
 
+
 def view_completed_dates(request, id):
     completed_date = CompletedHabit.objects.get(fk=id)
     return HttpResponseRedirect(reverse('index'))
+
 
 def view_inactivity_dates(request, id):
     completed_date = Inactivity.objects.get(fk=id)
