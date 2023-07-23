@@ -1,2 +1,5 @@
 env/
 .vscode/
+.pytest_cache/
+habits/__pycache__/
+habitTracker/__pycache__/
