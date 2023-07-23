@@ -151,6 +151,28 @@ or
 http://127.0.0.1:8000/
 ```
 
+# Docker Usage
+
+A Dockerfile and docker-compose.yml files are provided in the repository.
+
+Make sure Docker is installed in your system. If not, please download it from
+
+```
+https://docs.docker.com/get-docker/
+```
+
+While you're in the root folder, run the following command:
+
+```
+docker-compose up
+```
+
+Then go to a web browser and type in:
+
+```
+http://localhost:8000
+```
+
 # Test
 
 To test the functionalities just run:
